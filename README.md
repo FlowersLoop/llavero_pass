@@ -49,6 +49,7 @@ lib/
  │   ├─ unlock_screen.dart
  │   └─ home_screen.dart
  └─ main.dart
+```
 
 ## Tecnologías
  - Flutter & Dart
