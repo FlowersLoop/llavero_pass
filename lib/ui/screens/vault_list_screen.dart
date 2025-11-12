@@ -157,11 +157,13 @@ class VaultListScreen extends ConsumerWidget {
                       onSelected: (v) async {
                         if (v == 'copy_user') {
                           await Clipboard.setData(ClipboardData(text: e.usuario));
+                          if (!context.mounted) return; // validar antes de usar context
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Usuario copiado')),
                           );
                         } else if (v == 'copy_pass') {
                           await Clipboard.setData(ClipboardData(text: e.password));
+                          if (!context.mounted) return; // validar antes de usar context
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Contraseña copiada')),
                           );
@@ -172,13 +174,20 @@ class VaultListScreen extends ConsumerWidget {
                               title: const Text('Eliminar entrada'),
                               content: Text('¿Eliminar "${e.titulo}"? Esta acción no se puede deshacer.'),
                               actions: [
-                                TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancelar')),
-                                FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Eliminar')),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, false),
+                                  child: const Text('Cancelar'),
+                                ),
+                                FilledButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: const Text('Eliminar'),
+                                ),
                               ],
                             ),
                           );
                           if (ok == true) {
                             await ref.read(vaultControllerProvider.notifier).deleteEntry(e.id);
+                            // (No usamos context aquí después del await, así que no hace falta checar mounted)
                           }
                         }
                       },
