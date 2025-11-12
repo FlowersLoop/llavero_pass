@@ -47,8 +47,7 @@ class VaultListScreen extends ConsumerWidget {
           .whereType<File>()
           .where((f) => f.path.endsWith('.vault'))
           .toList()
-        ..sort((a, b) =>
-            b.lastModifiedSync().compareTo(a.lastModifiedSync()));
+        ..sort((a, b) => b.lastModifiedSync().compareTo(a.lastModifiedSync()));
 
       if (files.isEmpty) {
         throw 'No se encontraron archivos .vault en export/.';
@@ -56,22 +55,35 @@ class VaultListScreen extends ConsumerWidget {
 
       final lastFile = files.first;
 
-      final ok = await showDialog<bool>(
+      // ✅ Verifica que el widget siga montado ANTES de usar showDialog
+      if (!context.mounted) return;
+
+      final confirm = await showDialog<bool>(
         context: context,
         builder: (_) => AlertDialog(
           title: const Text('Importar último backup'),
           content: Text(
-              'Se importará el archivo más reciente:\n\n${lastFile.path}\n\n¿Deseas continuar?'),
+              'Se importará el archivo más reciente:\n\n${lastFile.path}\n\n¿Deseas continuar?'
+          ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancelar')),
-            FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Importar')),
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancelar'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Importar'),
+            ),
           ],
         ),
-      );
-      if (ok != true) return;
+      ) ??
+          false;
+
+      if (!confirm) return;
 
       await repo.importFromPath(lastFile.path);
 
+      // Invalida caches de Riverpod
       ref.invalidate(vaultEntriesProvider);
       ref.invalidate(vaultContainerProvider);
       ref.invalidate(sessionMasterPasswordProvider);
@@ -80,6 +92,8 @@ class VaultListScreen extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Importado correctamente desde:\n${lastFile.path}')),
       );
+
+      if (!context.mounted) return;
       context.go('/unlock');
     } catch (e) {
       if (!context.mounted) return;
