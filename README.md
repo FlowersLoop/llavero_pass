@@ -36,6 +36,7 @@ MiniPráctica de Flutter: **llavero de contraseñas 100% offline**, pensado para
 
 ## Arquitectura del proyecto
 
+```text
 lib/
  ├─ crypto/
  │   └─ crypto_service.dart
