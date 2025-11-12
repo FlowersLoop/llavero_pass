@@ -53,7 +53,7 @@ lib/
  - Flutter & Dart
  - Android Studio / VS Code
  - Soporte posible para Android, iOS, Web y Desktop
- - 
+
 ## Como Ejecutar
 
 Clonar:
@@ -66,6 +66,6 @@ Instalar dependencias:
 Ejecutar:
     flutter run || directo en el IDE
 
-Autores
+## Autores
 Fernando Flores López (@FlowersLoop)
 Santiago Tapia Reducindo
