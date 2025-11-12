@@ -67,5 +67,5 @@ Ejecutar:
     flutter run || directo en el IDE
 
 ## Autores
-Fernando Flores López (@FlowersLoop)
-Santiago Tapia Reducindo
+    Fernando Flores López (@FlowersLoop)
+    Santiago Tapia Reducindo
