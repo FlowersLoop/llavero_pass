@@ -56,16 +56,21 @@ lib/
 
 ## Como Ejecutar
 
-Clonar:
-    git clone https://github.com/FlowersLoop/llavero_pass.git
+Clonar: 
+
+    git clone https://github.com/FlowersLoop/llavero_pass.git 
     cd llavero_pass
 
 Instalar dependencias:
+
     flutter pub get
 
 Ejecutar:
+
     flutter run || directo en el IDE
 
 ## Autores
-    Fernando Flores López (@FlowersLoop)
-    Santiago Tapia Reducindo
+
+Fernando Flores López (@FlowersLoop)
+
+Santiago Tapia Reducindo
