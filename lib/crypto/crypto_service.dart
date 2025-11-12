@@ -55,7 +55,7 @@ class CryptoService {
       throw ArgumentError('keyBytes debe tener 32 bytes (256 bits)');
     }
     final secretKey = SecretKey(keyBytes);
-    final nonce = await _aesGcm.newNonce(); // 12 bytes por defecto
+    final nonce = _aesGcm.newNonce(); // 12 bytes por defecto
 
     final secretBox = await _aesGcm.encrypt(
       utf8.encode(plaintext),
